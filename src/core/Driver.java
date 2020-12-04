@@ -1,16 +1,15 @@
 package core;
 import gui.*;
-import databases.*;
 public class Driver extends Thread{
 	public static void main(String[] args) {
 
 		GUIManager g=new GUIManager();
-		g.StartLoadAnimation();
-		
+		g.StartLoadAnimation();		
 		try {
 			Thread.sleep(2000);
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println("Reached Sleep Catch in Driver");
 		}
 		
 		g.StopLoadAnimation();

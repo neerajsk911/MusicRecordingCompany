@@ -8,7 +8,7 @@ import javax.swing.*;
 import databases.*;
 
 public class Login extends Thread implements ActionListener{
-	GUIManager guiManager=new GUIManager();
+	GUIManager guiManager=null;
 	public static String privilege;
 	
 	JFrame frame=new JFrame("Music Recording Company");
@@ -21,6 +21,7 @@ public class Login extends Thread implements ActionListener{
 	JPasswordField password=new JPasswordField(10);
 	
 	public Login() {
+		guiManager=new GUIManager();
 		label_main.setForeground(Color.blue);
 //		bgImage.setIcon(new ImageIcon("D:\\1.png"));
 		frame.getContentPane().setBackground(Color.green);
@@ -30,7 +31,6 @@ public class Login extends Thread implements ActionListener{
 		frame.add(ps);
 		frame.add(password);
 		frame.add(bt);
-//		frame.add(bgImage);
 		frame.pack();
 		frame.setSize(860,600);
 		frame.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -44,7 +44,8 @@ public class Login extends Thread implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		frame.setVisible(false);
-		guiManager.StartLoadAnimation();
+		guiManager=new GUIManager();
+		guiManager.LoadAnotherGif("res/386.gif");
 		
 		GUILoginCheck g=new GUILoginCheck();
 		String user=username.getText();
@@ -85,12 +86,22 @@ public class Login extends Thread implements ActionListener{
 		}
 		else{
 			//TODO: User not found dialog
+			JPanel imgPanel=new JPanel();
 			JDialog userNotFoundDialog=new JDialog(frame,"User Not Found!");
-			JLabel UNF_label=new JLabel("The Username and Password did not match our records!");
-			userNotFoundDialog.pack();
-			userNotFoundDialog.setSize(400,100);
+			userNotFoundDialog.setLayout(new BorderLayout());
+			JLabel UNF_label=new JLabel("The Username and Password did not match our records!",SwingConstants.CENTER);
+//			userNotFoundDialog.pack();
+			JLabel SantaText=new JLabel(" ".repeat(3)+"UH-OH Not this way!");
+			JLabel bgImage=new JLabel();
+			imgPanel.setLayout(new BorderLayout());
+			bgImage.setIcon(new ImageIcon("res/821_reversed.gif"));
+//			bgImage.setIcon(new ImageIcon("res/386.gif"));
+			imgPanel.add(bgImage,BorderLayout.CENTER);
+			imgPanel.add(SantaText,BorderLayout.WEST);
+			userNotFoundDialog.setSize(420,150);
 			userNotFoundDialog.setLocationRelativeTo(null);
-			userNotFoundDialog.add(UNF_label,SwingConstants.CENTER);
+			userNotFoundDialog.add(imgPanel,BorderLayout.NORTH);
+			userNotFoundDialog.add(UNF_label,BorderLayout.CENTER);
 			userNotFoundDialog.setVisible(true);
 			//frame.setVisible(false);
 		}
