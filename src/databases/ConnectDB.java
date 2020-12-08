@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class ConnectDB {
 
-	public Connection connection=null;
+	public static Connection connection=null;
 	public String url="jdbc:postgresql://localhost:5432/Music Recording Company";
 	public String dbUname="postgres";
 	public String dbPswrd="2001";

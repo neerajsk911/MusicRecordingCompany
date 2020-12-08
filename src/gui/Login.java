@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import databases.GUILoginCheck;
@@ -21,10 +22,14 @@ public class Login implements ActionListener,ResourcePaths{
 	JLabel ps=new JLabel("Password:");
 	JTextField username=new JTextField(10);
 	JPasswordField password=new JPasswordField(10);
-	
+	Image icon = Toolkit.getDefaultToolkit().getImage(TitleMusicIcon); 
+
 	public Login() {
+		frame.setTitle("Welcome To Music Recording Company System");
+		frame.setIconImage(icon);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setSize(1280,720);
 		frame.setSize(860,600);
 		frame.setLayout(new BorderLayout(10, 10));
 		frame.setLocationRelativeTo(null);
@@ -136,6 +141,7 @@ public class Login implements ActionListener,ResourcePaths{
 			frame.getContentPane().setBackground(Color.blue);
 			frame.add(greetText);
 			new StartAdmin();
+			frame.setVisible(false);
 		}
 		else if(validationResult.equals("local")) {
 			
@@ -146,6 +152,7 @@ public class Login implements ActionListener,ResourcePaths{
 			frame.getContentPane().setBackground(Color.cyan);
 			frame.add(greetText);
 			new StartAdmin();
+			frame.setVisible(false);
 		}
 		else{
 			//TODO: User not found dialog

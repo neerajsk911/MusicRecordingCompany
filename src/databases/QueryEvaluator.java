@@ -2,13 +2,52 @@ package databases;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
 
 public class QueryEvaluator extends ConnectDB implements dbUpdater,dbInsert,RecordRemover{
 
-	public PreparedStatement preparedStatement=null;
-	public ResultSet resultSet=null;
+	public static PreparedStatement preparedStatement=null;
+	public static ResultSet resultSet=null;
 
+	public static DefaultTableModel displayTable() throws SQLException {
+		
+		try {
+			preparedStatement=connection.prepareStatement("select * from musician");
+			resultSet=preparedStatement.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return buildTableModel(resultSet);	
+	}
+	
+	//To Make a tableModel using the ResultSet
+	public static DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
+
+	    ResultSetMetaData metaData = rs.getMetaData();
+	    //ColumnNames
+	    Vector<String> columnNames = new Vector<String>();
+	    int columnCount = metaData.getColumnCount();
+	    for (int column = 1; column <= columnCount; column++) {
+	        columnNames.add(metaData.getColumnName(column));
+	    }
+	    //Rows of the table
+	    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+	    while (rs.next()) {
+	        Vector<Object> vector = new Vector<Object>();
+	        for (int columnIndex=1;columnIndex<=columnCount;columnIndex++) {
+	            vector.add(rs.getObject(columnIndex));
+	        }
+	        data.add(vector);
+	    }
+	    return new DefaultTableModel(data,columnNames);
+	}
+	
 	@Override
 	public void insertAlbum(ArrayList<String> parameters) {
 		// TODO Auto-generated method stub
