@@ -18,7 +18,6 @@ class LoadAnimation extends Canvas{
 		load.setLayout(new BorderLayout());
 		gifName="res/821.gif";
 		load.getContentPane().add(this,BorderLayout.CENTER);
-		System.out.println("Added!"+this);
 		load.pack();
 		load.setSize(320,100);
 		load.setLocationRelativeTo(null);
@@ -27,7 +26,6 @@ class LoadAnimation extends Canvas{
 	public LoadAnimation(String name) {
 		gifName=name;
 		load.add(this);
-		System.out.println("Added!"+this);
 		load.pack();
 		load.setSize(300,100);
 		load.setLocationRelativeTo(null);
@@ -57,11 +55,9 @@ public class GUIManager {
 	
 	public void StartLoadAnimation() {
 		g=new LoadAnimation();
-		System.out.println(g);
 	}
 	public void StopLoadAnimation() {
 		g.load.setVisible(false);
-		System.out.println(g);
 		g.repaint();
 	}
 	public void LoadAnotherGif(String name) {

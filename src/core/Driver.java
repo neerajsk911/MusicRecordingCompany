@@ -1,10 +1,11 @@
 package core;
 import gui.*;
-public class Driver extends Thread{
+public class Driver{
 	public static void main(String[] args) {
 
 		GUIManager g=new GUIManager();
 		g.StartLoadAnimation();		
+		
 		try {
 			Thread.sleep(2000);
 		} catch (Exception e) {
@@ -14,5 +15,6 @@ public class Driver extends Thread{
 		
 		g.StopLoadAnimation();
 		new Login();
+		new Terminate();
 	}
 }
