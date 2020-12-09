@@ -1,22 +1,43 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import databases.*;
 
 public class StartAdmin extends Login implements ActionListener{
 	
 	JFrame adminGUIFrame=new JFrame("Music Recording Company");
+	
+	JPanel panel1 = new JPanel();
+	JPanel panel2 = new JPanel();
+	JPanel panel3 = new JPanel();
+	JPanel panel4 = new JPanel();
+	JPanel panel5 = new JPanel();
+	
+	JPanel panel6 = new JPanel();
+	JPanel panel7 = new JPanel();
+	JPanel panel8 = new JPanel();
+	JPanel panel9 = new JPanel();
+	JPanel panel10 = new JPanel();
+	
 
 	JMenu display=new JMenu("Display");
 	JMenu insert=new JMenu("Insert");
@@ -158,20 +179,61 @@ public class StartAdmin extends Login implements ActionListener{
 		
 		//Display Events
 		case "Display a table":
+			ReInitPanels();
+			MakePanels();
 			try {
 				JTable table=new JTable(QueryEvaluator.displayTable());
-				adminGUIFrame.add(new JScrollPane(table));				
+//				adminGUIFrame.add(new JScrollPane(table));		
+				panel10.add(new JScrollPane(table));
+				panel5.add(panel10, BorderLayout.CENTER);
+				adminGUIFrame.add(panel5, BorderLayout.CENTER);
 				adminGUIFrame.setSize(1280,719);
+				adminGUIFrame.setVisible(true);
 			}
 			catch (SQLException e2) {	System.err.println("Display Musician Error");		}
 			break;
 		
 		//Insert Events
 		case "Add a New Production":
+			
+			ReInitPanels();
+			MakePanels();
+			
 			System.out.println("Add Production");
+			JLabel id=new JLabel("Production ID:");
+			JLabel name=new JLabel("Production Name:");
+			JLabel budget=new JLabel("Production Budget:");
 			
+			JTextField idTextField=new JTextField(10);
+			JTextField nameTextField=new JTextField(10);
+			JTextField budgetTextField=new JTextField(10);
+			JButton submitButton=new JButton("Submit");
+			
+			panel10.add(id);
+			panel10.add(idTextField);
+			panel10.add(name);
+			panel10.add(nameTextField);
+			panel10.add(budget);
+			panel10.add(budgetTextField);
+			panel10.add(submitButton);
+
+			panel5.add(panel10, BorderLayout.CENTER);
+			adminGUIFrame.add(panel5, BorderLayout.CENTER);
+			adminGUIFrame.setVisible(true);
+			submitButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					ArrayList<String>values=new ArrayList<>();
+					values.add(idTextField.getText());
+					values.add(nameTextField.getText());
+					values.add(budgetTextField.getText());
+
+					System.out.println("Values:"+values+"\nSubmit Event:Add Production Submit Button");
+					new QueryEvaluator().insertProduction(values);
+				}
+			});
 			break;
-			
 		case "Add New Album":
 			System.out.println("Add Album");
 			
@@ -255,5 +317,56 @@ public class StartAdmin extends Login implements ActionListener{
 			break;
 		}
 		
+	}
+	public void ReInitPanels() {
+		panel1.removeAll();
+		panel2.removeAll();
+		panel3.removeAll();
+		panel4.removeAll();
+		panel5.removeAll();
+		panel5.removeAll();
+		panel7.removeAll();
+		panel8.removeAll();
+		panel9.removeAll();
+		panel10.removeAll();
+		adminGUIFrame.repaint();
+	}
+	
+	public void MakePanels() {
+		panel1.setBackground(Color.red);
+		panel2.setBackground(Color.green);
+		panel3.setBackground(Color.yellow);
+		panel4.setBackground(Color.magenta);
+		panel5.setBackground(Color.blue);
+		
+		panel1.setPreferredSize(new Dimension(100, 100));
+		panel2.setPreferredSize(new Dimension(100, 100));
+		panel3.setPreferredSize(new Dimension(100, 100));
+		panel4.setPreferredSize(new Dimension(100, 100));
+		panel5.setPreferredSize(new Dimension(100, 100));
+
+		panel6.setBackground(Color.black);
+		panel7.setBackground(Color.darkGray);
+		panel8.setBackground(Color.gray);
+		panel9.setBackground(Color.lightGray);
+		panel10.setBackground(Color.white);
+
+		panel5.setLayout(new BorderLayout());
+
+		panel6.setPreferredSize(new Dimension(50, 50));
+		panel7.setPreferredSize(new Dimension(50, 50));
+		panel8.setPreferredSize(new Dimension(50, 50));
+		panel9.setPreferredSize(new Dimension(50, 50));
+		panel10.setPreferredSize(new Dimension(50, 50));
+
+		panel5.add(panel6, BorderLayout.NORTH);
+		panel5.add(panel7, BorderLayout.WEST);
+		panel5.add(panel8, BorderLayout.EAST);
+		panel5.add(panel9, BorderLayout.SOUTH);
+		
+		adminGUIFrame.add(panel1, BorderLayout.NORTH);
+		adminGUIFrame.add(panel2, BorderLayout.WEST);
+		adminGUIFrame.add(panel3, BorderLayout.EAST);
+		adminGUIFrame.add(panel4, BorderLayout.SOUTH);
 	}
 }

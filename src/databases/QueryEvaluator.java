@@ -84,8 +84,20 @@ public class QueryEvaluator extends ConnectDB implements dbUpdater,dbInsert,Reco
 	}
 	@Override
 	public void insertProduction(ArrayList<String> parameters) {
-		// TODO Auto-generated method stub
-		
+
+		try {
+			String idString=parameters.get(0);
+			String nameString=parameters.get(1);
+			int budget=Integer.parseInt(parameters.get(2));
+			
+			System.out.println("Inserting Production:"+idString+" "+nameString+" "+budget);
+			preparedStatement=connection.prepareStatement(INS_PRODUCTION);
+			preparedStatement.setString(1, idString);
+			preparedStatement.setString(2, nameString);
+			preparedStatement.setInt(3, budget);
+			System.out.println("Insertion Status:"+preparedStatement.executeUpdate());
+		}
+		catch(Exception e) { System.err.println("Inserting Production Stopped due to:"+e.getMessage());}
 	}
 	@Override
 	public void updateMusicianName(String name, String id) {
