@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.JTextField;
 
 import databases.*;
 
-public class StartAdmin extends Login implements ActionListener{
+public class StartAdmin extends Login implements ActionListener,Messages{
 	
 	JFrame adminGUIFrame=new JFrame("Music Recording Company");
 	
@@ -64,7 +66,12 @@ public class StartAdmin extends Login implements ActionListener{
 	
 	JMenuBar menuBar=new JMenuBar(); 
 	//Display Operations
-	JMenuItem displayTable=new JMenuItem("Display a table");
+	JMenuItem displayMusicians=new JMenuItem("Display Musicians");
+	JMenuItem displayMalSongs=new JMenuItem("Display Malayalam Songs");
+	JMenuItem displayLatestSongs=new JMenuItem("Display Latest Songs");
+	JMenuItem maxbudget=new JMenuItem("Display Album with Max Budget");
+	
+	
 	
 	//Insert Operations
 	JMenuItem insertProduction=new JMenuItem("Add a New Production",addProductionIcon);
@@ -132,7 +139,12 @@ public class StartAdmin extends Login implements ActionListener{
 	
 	public void MenuGUI() {
 		//TODO: Theme the menu buttons
-		display.add(displayTable);
+		display.add(displayMusicians);
+		display.add(displayMalSongs);
+		display.add(displayLatestSongs);
+		display.add(maxbudget);
+		menuBar.add(display);
+		
 		menuBar.add(display);
 		System.out.println("reached here");
 	}
@@ -143,7 +155,12 @@ public class StartAdmin extends Login implements ActionListener{
 	public void MenuEvents() {
 		
 		//Display Listeners
-		displayTable.addActionListener(this);
+		displayMalSongs.addActionListener(this);
+		displayMusicians.addActionListener(this);
+		displayLatestSongs.addActionListener(this);
+		maxbudget.addActionListener(this);
+		
+		
 		
 		//Insert Listeners
 		insertProduction.addActionListener(this);
@@ -178,11 +195,62 @@ public class StartAdmin extends Login implements ActionListener{
 		switch (ActionCommand) {
 		
 		//Display Events
-		case "Display a table":
+		case "Display Malayalam Songs":
+			ReInitPanels();
+			MakePanels();
+			System.out.println("Disp Mal Songs");
+			try {
+				JTable table=new JTable(QueryEvaluator.displayMalSongs());
+//				adminGUIFrame.add(new JScrollPane(table));	
+				panel10.add(new JScrollPane(table));
+				panel5.add(panel10, BorderLayout.CENTER);
+				adminGUIFrame.add(panel5, BorderLayout.CENTER);
+//				adminGUIFrame.setSize(1280,719);
+				adminGUIFrame.setVisible(true);
+			}
+			catch (SQLException e2) {	System.err.println("Display Mal Songs Error");		}
+			break;
+			
+			
+		case "Display Latest Songs":
+			ReInitPanels();
+			MakePanels();
+			System.out.println("Disp Latest Songs");
+			try {
+				JTable table=new JTable(QueryEvaluator.displayLatestsongs());
+//				adminGUIFrame.add(new JScrollPane(table));		
+				panel10.add(new JScrollPane(table));
+				panel5.add(panel10, BorderLayout.CENTER);
+				adminGUIFrame.add(panel5, BorderLayout.CENTER);
+				adminGUIFrame.setSize(1280,719);
+				adminGUIFrame.setVisible(true);
+			}
+			catch (SQLException e2) {	System.err.println("Display Songs Error");		}
+			break;
+			
+			
+		case "Display Album with Max Budget": 
+			ReInitPanels();
+			MakePanels();
+			System.out.println("Disp Max Budget");
+			try {
+				JTable table=new JTable(QueryEvaluator.maxBudget());
+//				adminGUIFrame.add(new JScrollPane(table));		
+				panel10.add(new JScrollPane(table));
+				panel5.add(panel10, BorderLayout.CENTER);
+				adminGUIFrame.add(panel5, BorderLayout.CENTER);
+				adminGUIFrame.setSize(1280,719);
+				adminGUIFrame.setVisible(true);
+			}
+			catch (SQLException e2) {	System.err.println("Display Budget Error");		}
+			break;
+		
+		
+		case "Display Musicians":
 			ReInitPanels();
 			MakePanels();
 			try {
-				JTable table=new JTable(QueryEvaluator.displayTable());
+				JTable table=new JTable(QueryEvaluator.displayMusicians());
 //				adminGUIFrame.add(new JScrollPane(table));		
 				panel10.add(new JScrollPane(table));
 				panel5.add(panel10, BorderLayout.CENTER);
@@ -200,6 +268,7 @@ public class StartAdmin extends Login implements ActionListener{
 			MakePanels();
 			
 			System.out.println("Add Production");
+			
 			JLabel id=new JLabel("Production ID:");
 			JLabel name=new JLabel("Production Name:");
 			JLabel budget=new JLabel("Production Budget:");
@@ -207,36 +276,101 @@ public class StartAdmin extends Login implements ActionListener{
 			JTextField idTextField=new JTextField(10);
 			JTextField nameTextField=new JTextField(10);
 			JTextField budgetTextField=new JTextField(10);
-			JButton submitButton=new JButton("Submit");
 			
-			panel10.add(id);
-			panel10.add(idTextField);
-			panel10.add(name);
-			panel10.add(nameTextField);
-			panel10.add(budget);
-			panel10.add(budgetTextField);
-			panel10.add(submitButton);
+			//Making local Instances for reusing
+			{
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
 
-			panel5.add(panel10, BorderLayout.CENTER);
-			adminGUIFrame.add(panel5, BorderLayout.CENTER);
-			adminGUIFrame.setVisible(true);
-			submitButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					ArrayList<String>values=new ArrayList<>();
-					values.add(idTextField.getText());
-					values.add(nameTextField.getText());
-					values.add(budgetTextField.getText());
+				box.add(id);
+				box.add(idTextField);
+				box.add(name);
+				box.add(nameTextField);
+				box.add(budget);
+				box.add(budgetTextField);
+				box.add(submitButton);
+				panel10.add(box,BorderLayout.CENTER);
 
-					System.out.println("Values:"+values+"\nSubmit Event:Add Production Submit Button");
-					new QueryEvaluator().insertProduction(values);
-				}
-			});
+				panel5.add(panel10, BorderLayout.CENTER);
+				adminGUIFrame.add(panel5, BorderLayout.CENTER);
+				adminGUIFrame.setVisible(true);
+				submitButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(idTextField.getText());
+						parameters.add(nameTextField.getText());
+						parameters.add(budgetTextField.getText());
+
+						System.out.println("Values:"+parameters+"\nSubmit Event:Add Production Submit Button");
+						int retCode=new QueryEvaluator().insertProduction(parameters);
+						JLabel status=new JLabel(INS_FAIL);
+						if(retCode==1) 
+							status.setText(INS_PRD_SUCCESS);
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+					}
+				});
+			}
 			break;
 		case "Add New Album":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Add Album");
 			
+			JLabel albumID=new JLabel("Album ID:");
+			JLabel albumTitle=new JLabel("Album Title:");
+			JLabel copyright=new JLabel("Copyright:");
+			JLabel genre=new JLabel("Genre:");
+			JLabel format=new JLabel("Format:");
+			JLabel prodId=new JLabel("Production ID:");
+			JLabel releaseDate=new JLabel("Release Date:");
+			
+			JTextField idField=new JTextField(10);
+			JTextField titleField=new JTextField(10);
+			JTextField copyrightField=new JTextField(10);
+			JTextField genreField=new JTextField(10);
+			JTextField formatField=new JTextField(10);
+			JTextField prodIdField=new JTextField(10);
+			JTextField relDateField=new JTextField(10);
+			{
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+
+				box.add(albumID); box.add(idField); box.add(albumTitle);
+				box.add(titleField); box.add(copyright); box.add(copyrightField);
+				box.add(genre); box.add(genreField); box.add(format);
+				box.add(formatField); box.add(prodId); box.add(prodIdField);
+				box.add(releaseDate); box.add(relDateField);box.add(submitButton);
+
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String> parameters=new ArrayList<>();
+						parameters.add(idField.getText());
+						parameters.add(titleField.getText());
+						parameters.add(copyrightField.getText());
+						parameters.add(genreField.getText());
+						parameters.add(formatField.getText());
+						parameters.add(prodIdField.getText());
+						parameters.add(relDateField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Album Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						int retCode=new QueryEvaluator().insertAlbum(parameters);
+						if(retCode==1) 
+							status.setText(INS_ALB_SUCCESS);
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+					}
+				});
+			}
 			break;
 			
 		case "Add New Song":
