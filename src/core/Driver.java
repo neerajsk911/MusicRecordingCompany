@@ -15,6 +15,5 @@ public class Driver{
 		
 		g.StopLoadAnimation();
 		new Login();
-		new Terminate();
 	}
 }

@@ -6,7 +6,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 class LoadAnimation extends Canvas implements ResourcePaths{
@@ -16,6 +20,8 @@ class LoadAnimation extends Canvas implements ResourcePaths{
 		load.setUndecorated(true);
 		load.setLayout(new BorderLayout());
 		gifName=ReindeerForward;
+		JLabel loadAn=new JLabel(new ImageIcon(gifName));
+		load.add(loadAn);
 		load.getContentPane().add(this,BorderLayout.CENTER);
 		load.pack();
 		load.setSize(320,80);
@@ -25,9 +31,10 @@ class LoadAnimation extends Canvas implements ResourcePaths{
 	public LoadAnimation(String name) {
 		load.setUndecorated(true);
 		gifName=name;
-		load.add(this);
+		load.getContentPane().add(this,BorderLayout.CENTER);
 		load.pack();
-		load.setSize(320,80);
+//		load.setSize(320,80);
+		load.repaint();
 		load.setLocationRelativeTo(null);
 		load.setVisible(true);
 	}
@@ -39,27 +46,17 @@ class LoadAnimation extends Canvas implements ResourcePaths{
 }
 
 public class GUIManager {
-	public LoadAnimation g=null;
-	
-	public void MenuGUI() {
-//		TODO: Theme the menu buttons
-//		display.add(displayTable);
-//		menuBar.add(display);
-		System.out.println("reached here");
-		
-	}
-	
-	public void frameGUI() {
-		//TODO: Design the frame GUI for admin window
-	}
+	public LoadAnimation g;
 	
 	public void StartLoadAnimation() {
 		g=new LoadAnimation();
 	}
 	public void StopLoadAnimation() {
-		g.load.removeAll();
 		g.load.setVisible(false);
-		g.repaint();
+		g.load.getContentPane().removeAll();
+		g.load.removeAll();
+		g.load.dispose();
+		g.load.repaint();
 	}
 	public void LoadAnotherGif(String name) {
 		//TODO: Take the path of the GIF and loads it
