@@ -13,14 +13,14 @@ public interface dbUpdater {
 	public String INCR_SONG="update singer set songs_sung=songs_sung+1 where m_id=?";
 	public String INCR_COMP="update composer set song_composed=song_composed+1 where m_id=?";
 	
-	void updateMusicianName(String name,String id);
-	void updateMusicianAddress(String address,String id);
-	void updateBandName(String name,String id);
-	void updateProductionName(String name,String id);
-	void updateProductionBudget(int budget,String id);
-	void updateAlbumTitle(String title,String id);
-	void updateSongAuthor(String author,String title);
-	void incrementSongs(String id);
-	void incrementComposed(String id);
+	int updateMusicianName(String name,String id);
+	int updateMusicianAddress(String address,String id);
+	int updateBandName(String name,String id);
+	int updateProductionName(String name,String id);
+	int updateProductionBudget(int budget,String id);
+	int updateAlbumTitle(String title,String id);
+	int updateSongAuthor(String author,String title);
+	int incrementSongs(String id);
+	int incrementComposed(String id);
 }
 	

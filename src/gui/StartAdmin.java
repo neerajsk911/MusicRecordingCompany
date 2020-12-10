@@ -223,6 +223,7 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 				panel5.add(panel10, BorderLayout.CENTER);
 				adminGUIFrame.add(panel5, BorderLayout.CENTER);
 				adminGUIFrame.setSize(1280,719);
+//				adminGUIFrame.setSize(1280,720);
 				adminGUIFrame.setVisible(true);
 			}
 			catch (SQLException e2) {	System.err.println("Display Songs Error");		}
@@ -256,6 +257,7 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 				panel5.add(panel10, BorderLayout.CENTER);
 				adminGUIFrame.add(panel5, BorderLayout.CENTER);
 				adminGUIFrame.setSize(1280,719);
+				adminGUIFrame.setSize(1280,720);
 				adminGUIFrame.setVisible(true);
 			}
 			catch (SQLException e2) {	System.err.println("Display Musician Error");		}
@@ -305,10 +307,14 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 						System.out.println("Values:"+parameters+"\nSubmit Event:Add Production Submit Button");
 						int retCode=new QueryEvaluator().insertProduction(parameters);
 						JLabel status=new JLabel(INS_FAIL);
-						if(retCode==1) 
+						status.setForeground(Color.red);
+						if(retCode==1) {
 							status.setText(INS_PRD_SUCCESS);
+							status.setForeground(Color.green);							
+						}
 						box.add(status);
 						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
 					}
 				});
 			}
@@ -317,23 +323,23 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 			ReInitPanels();
 			MakePanels();
 			System.out.println("Add Album");
-			
-			JLabel albumID=new JLabel("Album ID:");
-			JLabel albumTitle=new JLabel("Album Title:");
-			JLabel copyright=new JLabel("Copyright:");
-			JLabel genre=new JLabel("Genre:");
-			JLabel format=new JLabel("Format:");
-			JLabel prodId=new JLabel("Production ID:");
-			JLabel releaseDate=new JLabel("Release Date:");
-			
-			JTextField idField=new JTextField(10);
-			JTextField titleField=new JTextField(10);
-			JTextField copyrightField=new JTextField(10);
-			JTextField genreField=new JTextField(10);
-			JTextField formatField=new JTextField(10);
-			JTextField prodIdField=new JTextField(10);
-			JTextField relDateField=new JTextField(10);
 			{
+				JLabel albumID=new JLabel("Album ID:");
+				JLabel albumTitle=new JLabel("Album Title:");
+				JLabel copyright=new JLabel("Copyright:");
+				JLabel genre=new JLabel("Genre:");
+				JLabel format=new JLabel("Format:");
+				JLabel prodId=new JLabel("Production ID:");
+				JLabel releaseDate=new JLabel("Release Date:");
+
+				JTextField idField=new JTextField(10);
+				JTextField titleField=new JTextField(10);
+				JTextField copyrightField=new JTextField(10);
+				JTextField genreField=new JTextField(10);
+				JTextField formatField=new JTextField(10);
+				JTextField prodIdField=new JTextField(10);
+				JTextField relDateField=new JTextField(10);
+			
 				Box box=new Box(BoxLayout.Y_AXIS);
 				JButton submitButton=new JButton("Submit");
 
@@ -363,84 +369,479 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 						
 						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Album Submit Button");
 						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
 						int retCode=new QueryEvaluator().insertAlbum(parameters);
-						if(retCode==1) 
+						if(retCode==1) {
 							status.setText(INS_ALB_SUCCESS);
+							status.setForeground(Color.green);							
+						}
 						box.add(status);
 						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
 					}
 				});
 			}
 			break;
 			
 		case "Add New Song":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Add Song");
-			
+			{
+				JLabel title=new JLabel("Song Title:");
+				JLabel author=new JLabel("Author:");
+				JLabel albumId=new JLabel("Album ID:");
+				JLabel bandId=new JLabel("Band ID:");
+
+				JTextField titleField=new JTextField(10);
+				JTextField authorField=new JTextField(10);
+				JTextField albumIdField=new JTextField(10);
+				JTextField bandIdField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(title);box.add(titleField);box.add(author);
+				box.add(authorField);box.add(albumId);box.add(albumIdField);
+				box.add(albumIdField);box.add(bandId);box.add(bandIdField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(titleField.getText());
+						parameters.add(authorField.getText());
+						parameters.add(albumIdField.getText());
+						parameters.add(bandIdField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Song Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertSong(parameters);
+						if(retCode==1) {
+							status.setText(INS_SONG_SUCCESS);
+							status.setForeground(Color.green);							
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			break;
 			
 		case "Add New Musician":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Add Musician");
-			
+			{
+				JLabel MId=new JLabel("Musician ID:");
+				JLabel Mname=new JLabel("Musician Name:");
+				JLabel address=new JLabel("Musician Address:");
+
+				JTextField IdField=new JTextField(10);
+				JTextField nameField=new JTextField(10);
+				JTextField addressField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(MId);box.add(IdField);box.add(Mname);
+				box.add(nameField);box.add(address);box.add(addressField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(IdField.getText());
+						parameters.add(nameField.getText());
+						parameters.add(addressField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Musician Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertMusician(parameters);
+						if(retCode==1) {
+							status.setText(INS_MUSICIAN_SUCCESS);
+							status.setForeground(Color.green);							
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			break;
 			
 		case "Add New Band":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Add Band");
+			
+			{
+				JLabel BId=new JLabel("Band ID:");
+				JLabel Bname=new JLabel("Band Name:");
+
+				JTextField BIdField=new JTextField(10);
+				JTextField BnameField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(BId);box.add(BIdField);box.add(Bname);box.add(BnameField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(BIdField.getText());
+						parameters.add(BnameField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Band Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertBand(parameters);
+						if(retCode==1) {
+							status.setText(INS_BAND_SUCCESS);
+							status.setForeground(Color.green);		
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			
 			break;
 			
 		case "Add New Singer":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Add Singer");
 			
+			{
+				JLabel mid=new JLabel("Singer ID(Musician ID):");
+				JLabel sCount=new JLabel("Songs Sung:");
+				JLabel lingual=new JLabel("Lingual:");
+
+				JTextField midField=new JTextField(10);
+				JTextField sCountField=new JTextField(10);
+				JTextField lingualField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(mid);box.add(midField);box.add(sCount);
+				box.add(sCountField);box.add(lingual);box.add(lingualField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(midField.getText());
+						parameters.add(sCountField.getText());
+						parameters.add(lingualField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Singer Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertSinger(parameters);
+						if(retCode==1) {
+							status.setText(INS_SINGER_SUCCESS);
+							status.setForeground(Color.green);							
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			break;
 			
 		case "Add New Composer":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Add Composer");
 			
+			{
+				JLabel mid=new JLabel("Composer ID(Musician ID):");
+				JLabel cCount=new JLabel("Songs Composed:");
+				JLabel genre=new JLabel("Genre:");
+
+				JTextField midField=new JTextField(10);
+				JTextField cCountField=new JTextField(10);
+				JTextField genreField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(mid);box.add(midField);box.add(cCount);
+				box.add(cCountField);box.add(genre);box.add(genreField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(midField.getText());
+						parameters.add(cCountField.getText());
+						parameters.add(genreField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Composer Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertComposer(parameters);
+						if(retCode==1) {
+							status.setText(INS_COMPOSER_SUCCESS);
+							status.setForeground(Color.green);							
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			break;
 			
 		case "Map the Musician of a Song":
-			System.out.println("Map Musician-->Song");
+			ReInitPanels();
+			MakePanels();
+			System.out.println("Map Musician-->Song");			
+			{
+				JLabel title=new JLabel("Song Title:");
+				JLabel mId=new JLabel("Musician ID:");
+
+				JTextField titleField=new JTextField(10);
+				JTextField mIdField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(title);box.add(titleField);box.add(mId);box.add(mIdField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(titleField.getText());
+						parameters.add(mIdField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Map Nusician Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertPerformedBy(parameters);
+						if(retCode==1) {
+							status.setText(MAP_MUSICIAN_SUCCESS);
+							status.setForeground(Color.green);							
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			
 			break;
 			
 		case "Map Song to a Language":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Map Song-->Language");
+			
+			{
+				JLabel title=new JLabel("Song Title(as in database):");
+				JLabel lang=new JLabel("Songs Sung:");
+
+				JTextField titleField=new JTextField(10);
+				JTextField langField=new JTextField(10);
+
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(title);box.add(titleField);box.add(lang);box.add(langField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ArrayList<String>parameters=new ArrayList<>();
+						parameters.add(titleField.getText());
+						parameters.add(langField.getText());
+						
+						System.out.println("Parameters:"+parameters+"\nSubmit Event:Add Song Submit Button");
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().insertSongLanguage(parameters);
+						if(retCode==1) {
+							status.setText(MAP_LANGUAGE_SUCCESS);
+							status.setForeground(Color.green);
+						}
+						box.add(status);
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+					}
+				});
+			}
 			
 			break;
 		
 		//Update Events
 		case "Change a Musician Name":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Update Musician Name");
+			//Copy this entire block
+			{
+				JLabel MId=new JLabel("Musician ID:");
+				JLabel MName=new JLabel("New Name:");
+				
+				JTextField MIdField=new JTextField(10);
+				JTextField MNameField=new JTextField(10);
+				Box box=new Box(BoxLayout.Y_AXIS);
+				JButton submitButton=new JButton("Submit");
+				
+				box.add(MId);box.add(MIdField);
+				box.add(MName);box.add(MNameField);
+				box.add(submitButton);
+				
+				panel10.add(box);
+
+				panel5.add(panel10,BorderLayout.CENTER);
+				adminGUIFrame.add(panel5);
+				adminGUIFrame.setVisible(true);
+				submitButton.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String id=MIdField.getText();
+						String name=MNameField.getText();
+						System.out.println("Parameters:"+id+" "+name+"\nSubmit Event:Update Musician Name Submit Button");
+						
+						JLabel status=new JLabel(INS_FAIL);
+						status.setForeground(Color.red);
+						int retCode=new QueryEvaluator().updateMusicianName(name, id);
+						if(retCode==1) {
+							status.setText(MAP_LANGUAGE_SUCCESS);
+							status.setForeground(Color.green);
+						}
+						box.add(status);
+						
+						//Making changes to the frame to reflect the added status label
+						adminGUIFrame.setSize(1280,719);
+						adminGUIFrame.setSize(1280,720);
+						
+					}
+				});
+			}		//Stop copying here here
 			
 			break;
 			
 		case "Change a Musician Address":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Update Musician Address");
+			
+			//Paste the copied content below this
 			
 			break;
 			
 		case "Update a Band Name":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Update Band Name");
+
+			//Paste the copied content below this
 			
 			break;
 			
 		case "Change Production Name":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Update Production Name");
+			
+			//Paste the copied content below this
 			
 			break;
 			
 		case "Update the Budget of a Production":
+			ReInitPanels();
+			MakePanels();
+			
+			//Paste the copied content below this
+			
 			System.out.println("Update Budget");
 			
 			break;
 			
 		case "Change an Album Title":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Update Album Title");
+			
+			//Paste the copied content below this
 			
 			break;
 			
 		case "Update the Author of a Song":
+			ReInitPanels();
+			MakePanels();
 			System.out.println("Update Author");
+			
+			//Paste the copied content below this
 			
 			break;
 		
