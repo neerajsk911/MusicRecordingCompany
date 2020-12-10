@@ -12,12 +12,13 @@ public interface dbInsert {
 	public String INS_LANGUAGE="insert into songlanguage values (?,?)";
 	public String INS_PRODUCTION="insert into production values (?,?,?)";
 	
-	void insertAlbum(ArrayList<String>parameters);
-	void insertSong(ArrayList<String>parameters);
-	void insertMusician(ArrayList<String>parameters);
-	void insertSinger(ArrayList<String>parameters);
-	void insertComposer(ArrayList<String>parameters);
-	void insertPerfomedBy(ArrayList<String>parameters);
-	void insertSongLanguage(ArrayList<String>parameters);
-	void insertProduction(ArrayList<String>parameters);
+	int insertAlbum(ArrayList<String>parameters);
+	int insertSong(ArrayList<String>parameters);
+	int insertMusician(ArrayList<String>parameters);
+	int insertSinger(ArrayList<String>parameters);
+	int insertComposer(ArrayList<String>parameters);
+	int insertPerformedBy(ArrayList<String>parameters);
+	int insertBand(ArrayList<String>parameters);
+	int insertSongLanguage(ArrayList<String>parameters);
+	int insertProduction(ArrayList<String>parameters);
 }

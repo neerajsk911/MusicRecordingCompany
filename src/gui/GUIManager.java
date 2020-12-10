@@ -4,64 +4,63 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
-class LoadAnimation extends Canvas{
+class LoadAnimation extends Canvas implements ResourcePaths{
 	public JFrame load= new JFrame();
 	public String gifName=null;
 	public LoadAnimation() {
+		load.setUndecorated(true);
 		load.setLayout(new BorderLayout());
-		gifName="res/821.gif";
+		gifName=ReindeerForward;
+		JLabel loadAn=new JLabel(new ImageIcon(gifName));
+		load.add(loadAn);
 		load.getContentPane().add(this,BorderLayout.CENTER);
 		load.pack();
-		load.setSize(320,100);
+		load.setSize(320,80);
 		load.setLocationRelativeTo(null);
 		load.setVisible(true);
 	}
 	public LoadAnimation(String name) {
+		load.setUndecorated(true);
 		gifName=name;
-		load.add(this);
+		load.getContentPane().add(this,BorderLayout.CENTER);
 		load.pack();
-		load.setSize(300,100);
+//		load.setSize(320,80);
+		load.repaint();
 		load.setLocationRelativeTo(null);
 		load.setVisible(true);
 	}
 	public void paint(Graphics g) {   
 		Toolkit t=Toolkit.getDefaultToolkit();  
 		Image i=t.getImage(gifName);  
-		g.drawImage(i,20,0,this);   
+		g.drawImage(i,30,10,this);   
 	}	
 }
 
 public class GUIManager {
-	public LoadAnimation g=null;
-	
-	public void MenuGUI() {
-//		TODO: Theme the menu buttons
-//		display.add(displayTable);
-//		menuBar.add(display);
-		System.out.println("reached here");
-		
-	}
-	
-	public void frameGUI() {
-		//TODO: Design the frame GUI for admin window
-	}
+	public LoadAnimation g;
 	
 	public void StartLoadAnimation() {
 		g=new LoadAnimation();
 	}
 	public void StopLoadAnimation() {
 		g.load.setVisible(false);
-		g.repaint();
+		g.load.getContentPane().removeAll();
+		g.load.removeAll();
+		g.load.dispose();
+		g.load.repaint();
 	}
 	public void LoadAnotherGif(String name) {
 		//TODO: Take the path of the GIF and loads it
+		System.out.println("Loading New Gif Path:"+name);
 		g=new LoadAnimation(name);
 	}
 }

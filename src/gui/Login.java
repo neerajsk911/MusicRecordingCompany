@@ -1,4 +1,4 @@
-package gui;
+ package gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,8 +9,6 @@ import javax.swing.*;
 import databases.GUILoginCheck;
 
 public class Login implements ActionListener,ResourcePaths{
-	int width_margin=10;
-	int height_margin= 10;
 	GUIManager guiManager=null;
 	public static String privilege;
 	
@@ -23,7 +21,7 @@ public class Login implements ActionListener,ResourcePaths{
 	JTextField username=new JTextField(10);
 	JPasswordField password=new JPasswordField(10);
 	Image icon = Toolkit.getDefaultToolkit().getImage(TitleMusicIcon); 
-
+	
 	public Login() {
 		frame.setTitle("Welcome To Music Recording Company System");
 		frame.setIconImage(icon);
@@ -31,20 +29,36 @@ public class Login implements ActionListener,ResourcePaths{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.setSize(1280,720);
 		frame.setSize(860,600);
-		frame.setLayout(new BorderLayout(10, 10));
+		frame.setLayout(new BorderLayout());
 		frame.setLocationRelativeTo(null);
 
-		JPanel panel1 = new JPanel();
+		us.setFont(new Font("Chiller", Font.PLAIN, 20));
+		ps.setFont(new Font("Chiller", Font.PLAIN, 20));	
+		bt.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
+
+		
+		JPanel panel1 = new JPanel(); 	
 		JPanel panel2 = new JPanel();
 		JPanel panel3 = new JPanel();
 		JPanel panel4 = new JPanel();
 		JPanel panel5 = new JPanel();
-
-		panel1.setBackground(Color.red);
-		panel2.setBackground(Color.green);
-		panel3.setBackground(Color.yellow);
-		panel4.setBackground(Color.magenta);
-		panel5.setBackground(Color.blue);
+		
+		JLabel panel1Image=new JLabel(new ImageIcon(LoginOutTop));
+		panel1.add(panel1Image);
+		JLabel panel2Image=new JLabel(new ImageIcon(LoginOutLeft),JLabel.CENTER);
+		panel2.add(panel2Image);
+		
+		JLabel panel3Image=new JLabel(new ImageIcon(LoginOutRight),SwingConstants.CENTER);
+		panel3.add(panel3Image);
+		
+		JLabel panel4Image=new JLabel(new ImageIcon(LoginOutBottom),SwingConstants.CENTER);
+		panel4.add(panel4Image);
+		
+		panel1.setBackground(Color.black);		//right
+		panel2.setBackground(Color.black);		//right
+		panel3.setBackground(Color.black);		//right
+		panel4.setBackground(Color.black);		//right
+		panel5.setBackground(Color.black);
 
 		panel1.setPreferredSize(new Dimension(100, 100));
 		panel2.setPreferredSize(new Dimension(100, 100));
@@ -59,12 +73,24 @@ public class Login implements ActionListener,ResourcePaths{
 		JPanel panel8 = new JPanel();
 		JPanel panel9 = new JPanel();
 		JPanel panel10 = new JPanel();
+		
+		JLabel panel6Image=new JLabel(new ImageIcon(LoginInTop));
+		panel6.add(panel6Image);
+		JLabel panel7Image=new JLabel(new ImageIcon(LoginInLeft));
+		panel7.add(panel7Image);
+		
+		JLabel panel8Image=new JLabel(new ImageIcon(LoginInRight));
+		panel8.add(panel8Image);
+		
+		JLabel panel9Image=new JLabel(new ImageIcon(LoginInBottom));
+		panel8.add(panel9Image);
 
 		panel6.setBackground(Color.black);
-		panel7.setBackground(Color.darkGray);
-		panel8.setBackground(Color.gray);
-		panel9.setBackground(Color.lightGray);
-		panel10.setBackground(Color.white);
+		panel7.setBackground(Color.black);
+		panel8.setBackground(Color.black);
+		panel9.setBackground(Color.black);
+		panel10.setBackground(Color.black);
+		panel10.setBackground(new Color(0, 0, 0,0));
 
 		panel5.setLayout(new BorderLayout());
 
@@ -89,21 +115,26 @@ public class Login implements ActionListener,ResourcePaths{
 		frame.add(panel3, BorderLayout.EAST);
 		frame.add(panel4, BorderLayout.SOUTH);
 		frame.add(panel5, BorderLayout.CENTER);
-
 		
-		label1.setForeground(Color.black);
-		label1.setFont(label1.getFont().deriveFont(Font.BOLD, 20f));
-		panel1.add(label1);
 
-		us.setForeground(Color.black);
-		ps.setForeground(Color.black);
+		us.setForeground(Color.white);
+		ps.setForeground(Color.white);
+		Box box=new Box(BoxLayout.Y_AXIS);
 
-
-		panel10.add(us);
-		panel10.add(username);
-		panel10.add(ps);
-		panel10.add(password);
-		panel10.add(bt);
+		//Creates 20px of vertical space
+		box.add(Box.createVerticalStrut(20));
+		box.add(us);
+		box.add(username);
+		
+		box.add(Box.createVerticalStrut(20));
+		box.add(ps);
+		box.add(password);
+		
+		box.add(Box.createVerticalStrut(20));
+		box.add(bt);
+		
+		panel10.add(box,SwingConstants.CENTER);
+		
 		frame.setVisible(true);
 		password.addActionListener(this);
 		bt.addActionListener(this);
@@ -112,7 +143,6 @@ public class Login implements ActionListener,ResourcePaths{
 	public void actionPerformed(ActionEvent e) {
 		frame.setVisible(false);
 		guiManager=new GUIManager();
-		guiManager.LoadAnotherGif(ReindeerForward);
 		
 		GUILoginCheck g=new GUILoginCheck();
 		String user=username.getText();
@@ -126,8 +156,11 @@ public class Login implements ActionListener,ResourcePaths{
 		System.out.println("val:"+validationResult);
 		JLabel greetText=new JLabel("Hello "+validationResult+"!");
 
+		guiManager.LoadAnotherGif(LoadCircle);
+		
+		//Make delay for animation
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(1000);
 		} 
 		catch (Exception e2) { System.out.println("Login Interrupted");		}
 		
