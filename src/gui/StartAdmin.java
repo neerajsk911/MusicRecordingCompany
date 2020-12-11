@@ -191,7 +191,6 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 	}
 	public void MenuEvents() {
 
-
 		//Display Listeners
 		displayMalSongs.addActionListener(this);
 		displayMusicians.addActionListener(this);
@@ -1655,6 +1654,7 @@ public class StartAdmin extends Login implements ActionListener,Messages{
 						
 					}
 				});
+				break;
 			}
 		
 		case "About":
