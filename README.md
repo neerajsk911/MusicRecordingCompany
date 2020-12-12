@@ -122,7 +122,7 @@ particular Song can be Orchestrated by only a Single Band.
 
 * Package: **core**
 
-  * **Driver.java ** - **Driver code** *for the Application*
+  * **Driver.java** - **Driver code** *for the Application*
   * *Terminate.java - Terminates the JDBC Connections*
 
 * Package: **databases**
@@ -149,7 +149,7 @@ particular Song can be Orchestrated by only a Single Band.
 
 ## Devs:
 
-*This Project was Created as a part of the Course [**Object Oriented Programming(19CSE202)**](https://amritauniv.sharepoint.com/sites/ObjectOrientedProgrammingJune-Dec2020/) by Group 6 S3 CSE-C, Amrita School of Engineering,Amritapuri*
+*This Project was Created as a part of the Course [**Object Oriented Programming(19CSE204)**](https://amritauniv.sharepoint.com/sites/ObjectOrientedProgrammingJune-Dec2020/) by Group 6 S3 CSE-C, Amrita School of Engineering,Amritapuri*
 * ***Neeraj S Kumar***
 * ***Meenakshi R***
 * ***Arathi Premkumar***
